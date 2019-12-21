@@ -1,0 +1,45 @@
+
+.blackselectable { width: 100px; height: 80px; border: 1px solid #0053CF; font-size: 4em; text-align: center; background: #000000; color: white; }
+th.Bingo { width: 100px; height: 80px; border: 1px solid #0053CF; font-size: 4em; text-align: center; background-color: #990000; color: white }
+.on { background-color:#FF9933; color:white; }
+.called { background-color:#FF0000; color:white; }
+.bottomlabels { width: 100px; height: 105px; border: 1px solid #000000; font-family: Helvetica; font-size: 1.5em; text-align: center; background-color: #FFEB99; color: black; float: left; }
+.joy-img {
+   object-fit: cover;
+   width: 845px;
+   height: 646px;
+   border: 6px solid #FFFF00;
+}
+.lastnumdiv { width: 310px; height: 210px; border: 2px solid #000000; text-align: center; background-color: white; color: #000000; float: left; left: 200px; }
+.bottomspacerdiv1 { width: 1px; height: 210px; text-align: center; background-color: #0053CF; float: left; }
+.lastnumber { font-family: Helvetica; font-size: 65px; }
+.lastcalledlabel { width: 309px; height: 40px; font-family: Helvetica; font-size: 30px; border: 1px solid #000000; text-align: center; background-color: #FFEB99; color: black; float: left;}
+.bingoball { margin-top: 30px; margin-left: 65px; width: 190px; height: 190px; font-family: Helvetica; background-image:url('bingoball.png'); background-size: 190px 190px; background-repeat: no-repeat;}
+.infodiv { width: 416px; height: 105px;  text-align: center; background-color: white; color: #000000; float:left; border: 1px solid #000000; border-right: 2px solid #000000;}
+.bingogame { font-family: Helvetica; font-size: 80px; margin-top: 10px; }
+.jackpot { font-family: Helvetica; font-size: 80px; margin-top: 10px; }
+.timertext {position: relative; top: 10px; font-size: 4.5em; }
+.timer {position: relative; top: 20px; font-size: 7em;}
+.admin { width: 414px; height: 210px; border: 2px solid #000000; text-align: center; background-color: #E6E6E6; color: #000000; float:right; }
+#title { font-family: Helvetica; font-size: 4em; text-align: center; color: white; line-height: 100px; height: 100px; position: absolute; left: 150px;}
+#banner { float: left;}
+#header { background-color:#0053CF;width:1665px;height: 100px; float: left; position: relative;}
+#bingocalled { font-family: Helvetica; font-size: 3em; text-align: center; color: black; line-height: 100px; background-color:#FFFF00;width:1250px;height: 100px; float: left;  position: absolute;left: 210px; display: none;}
+#confirmbingo {display: none;}
+#nextpicture {display: none;}
+#cancelbingo {display: none;}
+#bingotable { float: left; width:1665px;}
+#container { background-color:#0053CF; width:1665px; height: 950px;}
+#BottomContainer { width:1665px; height: 214px; float: left; background-color: #0053CF;}
+#BottomLeftBlock {width:521px;height: 234x; float: left; }
+#BottomLogo1 {width: 202px; height: 210px; float: left; border: 2px solid #000000; background-color:#0053CF;}
+#BottomLogo2 {width: 202px; height: 210px; float: left; border: 2px solid #000000; background-color:#0053CF;}
+#buttoncontainer {background-color:#E6E6E6;height:200px;width:296px;float:left; margin-top: 10px;}
+#BottomLogo1 img {width: 202px; height: 210px;}
+#BottomLogo2 img {width: 202px; height: 210px;}
+#timerwindow { font-family: Helvetica; text-align: center; color: black; background-color:#FFFF00; width:822px; height: 247px; float: left; position: absolute;left: 430px; top: 200px; display: none;}
+#timerbuttons{ display: none; }
+#timercontrolbuttons {height:30px;width:296px;float:bottom; display:none; margin-bottom: 5px;}
+#timerstartcontrols {height:30px;width:296px;float:bottom; 10px; display: none; margin-bottom: 5px;}
+#settimercontrols {height:30px;width:296px;float:bottom; 10px; margin-bottom: 5px;}
+#WinnerWindow { font-family: Helvetica; text-align: center; color: black; background-color:#FFFF00; width:306px; height: 247px; float: left; position: absolute;left: 460px; top: 100px; display: none;}

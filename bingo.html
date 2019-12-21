@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="description" content="Bingo" />
+<meta charset=utf-8 />
+<title>IC Festival Bingo</title>
+
+<script src="jquery-1.11.1.js"></script>
+<link rel="stylesheet" href="bingo.css" />
+
+<script>
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// ATTENTION:
+/// The following line of code needs to be updated to match the number of GIF files in the "GIFs" folder.
+/// The code should read:
+///   var number_of_GIFs = XX;
+/// Change the XX to match the number of GIF files in the "GIFs" folder, then click "Save".          
+/// Once that is done, open "Bingo.html" in the browser.
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+var number_of_GIFs = 26;	
+var randomNum = 0;
+GIF_array =  [];
+
+function showGIF() {
+	var i;
+	
+	if (GIF_array.length == number_of_GIFs) {
+		GIF_array.length = 0;
+	};
+	randomNum = Math.floor((Math.random()*number_of_GIFs)+1);	
+	
+	for (i = 0; i <= GIF_array.length; ++i) {
+
+		//alert ("i is " + i + " array length is " + GIF_array.length + ", GIF_array is " + GIF_array + ", randomNum is " + randomNum);
+		if (randomNum == GIF_array[i]){
+			i = -1;
+			randomNum = Math.floor((Math.random()*number_of_GIFs)+1);	
+			//alert("Generating new random number.  New num is " + randomNum);
+		}else{
+
+			if (GIF_array.length == i){
+				//alert ("adding " + randomNum + " in position " + GIF_array.length + " GIF_array = " + GIF_array);
+				GIF_array[GIF_array.length]= randomNum;
+				i = GIF_array.length;
+			};
+			//alert ("GIF_array = " + GIF_array);
+			if (GIF_array.length == number_of_GIFs) {
+				//alert ("Array is now full.  Resetting array");
+				GIF_array.length = 0;
+				GIF_array = [];
+			};
+
+		};
+	};
+
+	$('#Joy-Image').attr('src', 'GIFs/image' + randomNum + '.gif');
+	$("#WinnerWindow").show();
+}
+
+$(function() {
+	$("#confirmbingo").click(function() {
+    $("#bingocalled").fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300);
+    $("div#bingocalled").text("Bingo has been confirmed.  Congratulations!!");
+    $("#confirmbingo").hide();
+	$("#nextpicture").show();
+    $("#jackpotlabel").css( "background-color", "#FFFF00" );
+    $("#jackpotamt").fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300);
+    $("#jackpotlabel").fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300);
+	var randomize = document.getElementById('randmomize');
+	showGIF();
+	});
+});
+
+$(function() {
+	$("#nextpicture").click(function() {
+	showGIF();
+	});
+});
+
+
+
+////////////////////////////////////////////////////////////////////////////
+// To change the default timer values, update the 3 following
+// fields: defaultTimerHour, defaultTimerMinute, defaultTimerSeconds
+// Just change the number before the semi-colon to whatever value you want.
+// for example, to change the default timer value to 20 minutes, change
+// 	var defaultTimerMinute = 15; 
+// to
+// 	var defaultTimerMinute = 20;
+ 
+var defaultTimerHour = 0;
+var defaultTimerMinute = 15;
+var defaultTimerSeconds = 0;
+
+var lastcallednumber = null;
+var lastcalledletter = "";
+
+$(function(){
+  $("td").click(function(){
+    if ($(this).hasClass("called") || $(this).hasClass("on"))  {
+	if ($(this).hasClass("called")) {
+	    $(this).toggleClass("called");
+	}
+	if ($(this).hasClass("on")) {
+	    $(this).toggleClass("on");
+	}
+    } else {
+	$("#callerboard td.called").addClass("on");
+        $("#callerboard td.called").toggleClass("called");
+    	$(this).addClass("called");
+    }    
+    
+    lastcallednumber = $(this).text();
+    
+    if (lastcallednumber < 16) {
+	lastcalledletter = "B";
+    } else if (lastcallednumber < 31) {
+	lastcalledletter = "I";
+    } else if (lastcallednumber < 46) {
+	lastcalledletter = "N";
+    } else if (lastcallednumber < 61) {
+	lastcalledletter = "G";
+    } else {
+	lastcalledletter = "O";
+    }
+    
+
+    if ($(this).hasClass("called")) {
+	
+    } else {
+	lastcalledletter = "";
+	lastcallednumber = "";
+    }
+    $("div#lastcalled").text(lastcalledletter + " " + lastcallednumber);
+  });
+});
+
+
+$(function() {
+  $("#reset").click(function() {
+    lastcalledletter = "";
+    lastcallednumber = "";
+    
+    $("div#lastcalled").text(lastcalledletter + " " + lastcallednumber);
+    $("#callerboard td.on").toggleClass("on");
+    $("#callerboard td.called").toggleClass("called");
+    $("div#jackpotamt").text("");
+    $("div#gametype").text("");
+    $('input[type=text]').val('');
+    $("#bingocalled").fadeOut();
+    $("#jackpotlabel").css( "background-color", "#FFEB99" );
+    $("div#bingocalled").text("BINGO CALLED!! - Hold all cards until confirmed");
+    $("#confirmbingo").hide();
+    $("#cancelbingo").hide();
+	$("#WinnerWindow").hide();
+    $("#nextpicture").hide();
+    $("#bingowascalled").show();
+    $("div#gametype").text("Bingo");
+    $("#bingogames option[value=Bingo]").attr('selected', 'selected');
+    //$("#bingogames").selectmenu('refresh', true);
+    
+  });
+});
+$(function() {
+  $("#settimerbutton").click(function() {
+	console.log("set timer button has been pressed");
+	console.log("defaultTimerHour = " + defaultTimerHour);
+	console.log("defaultTimerMinute = " + defaultTimerMinute);
+	console.log("defaultTimerSeconds = " + defaultTimerSeconds);
+	$('#hour').val(defaultTimerHour);
+	$('#minute').val(defaultTimerMinute);
+	$('#second').val(defaultTimerSeconds);
+	$("#settimercontrols").hide();
+	$("#timerstartcontrols").show();
+  });
+});
+
+$(function() {
+  $("#timerbtn").click(function() {
+	var hourValue = $('#hour:text').val();
+    var minuteValue = $('#minute:text').val();
+	var secondValue = $('#second:text').val();
+	$("#timerwindow").show();
+	startTimer(hourValue, minuteValue, secondValue);
+	$("#timercontrolbuttons").show();
+	$("#pausetimerbutton").show();
+	$("#timerstartcontrols").hide();
+	
+  });
+});
+
+$(function() {
+  $("#resumetimerbutton").click(function() {
+	resumeTimer();
+	$("#resumetimerbutton").hide();
+	$("#pausetimerbutton").show();
+  });
+});
+
+$(function() {
+  $("#pausetimerbutton").click(function() {
+	$("#resumetimerbutton").show();
+	pauseTimer();
+	$("#pausetimerbutton").hide();
+  });
+});
+ 
+$(function() {
+  $("#canceltimerbutton").click(function() {
+	clearInterval(id);
+	$("#timerwindow").hide();
+	$("#timercontrolbuttons").hide();
+	$("#pausetimerbutton").hide();
+	$("#resumetimerbutton").hide();
+	$("#settimercontrols").show();
+  });
+});
+
+$(function() {
+  $("#cancelsettimerbutton").click(function() {
+	pauseTimer();
+	$("#timerwindow").hide();
+	$("#timerstartcontrols").hide();
+	$("#settimercontrols").show();
+  });
+});
+ 
+$(function() {
+  $("#gamebutton").click(function() {
+    var selectedValue = $('#bingogames option:selected').val();
+    $("div#gametype").text(selectedValue);
+
+  });
+});
+
+$(function() {
+  $("#jackpotamtbutton").click(function() {
+    var inputValue = $('#amount:text').val();
+    $("div#jackpotamt").text("$" + inputValue);
+
+  });
+});
+
+$(function() {
+  $("#bingowascalled").click(function() {
+
+    $("#bingocalled").fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300);
+    $("#confirmbingo").show();
+    $("#cancelbingo").show();
+    $("#bingowascalled").hide();
+	
+  });
+});
+
+$(function() {
+  $("#cancelbingo").click(function() {
+    $("div#bingocalled").text("BINGO CALLED!! - Hold all cards until confirmed");
+    $("#bingocalled").fadeOut();
+    $("#confirmbingo").hide();
+	$("#nextpicture").hide();
+    $("#cancelbingo").hide();
+    $("#bingowascalled").show();
+    $("#jackpotlabel").css( "background-color", "#FFEB99" );
+	$("#WinnerWindow").hide();
+  });
+});
+
+
+var end = Date.now() + 60000;
+
+var second = 1000;
+var minute = second * 60;
+var hour = minute * 60;
+var day = hour * 24;
+var end;
+var id;
+var value = "0:0:0";
+
+function showTimer() {
+    $("#timerwindow").show();
+	var now = Date.now(),
+        distance = end - now;
+	
+	 var days = 0,
+        hours = Math.floor((distance % day) / hour),
+        minutes = Math.floor((distance % hour) / minute),
+        seconds = Math.floor((distance % minute) / second),
+        milliseconds = distance % second,
+        countdownElement = document.getElementById('countdown');	
+	
+    if (hours == 0 & minutes == 0 & seconds == 0) {
+		clearInterval(id);
+    	document.getElementById('countdown').innerHTML = 0 + ':' + 0 + ':' + 0;
+		$("#timer").fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300);
+    }
+	countdownElement.textContent = hours + ':' + minutes + ':' + seconds;
+}
+
+function startTimer(h, m, s) {
+    end = Date.now() + (h * 60 * 60 * 1000) +  (m * 60 * 1000) +  (s * 1000);
+    id = setInterval(showTimer, 10);
+}
+
+function pauseTimer() {
+    value = countdown.textContent;
+    clearInterval(id);
+}
+
+function resumeTimer() {
+    var t = value.split(":");
+
+    startTimer(parseInt(t[0], 10), parseInt(t[1], 10), parseInt(t[2], 10));
+}
+
+</script>
+
+</head>
+  
+  
+<body bgcolor="#0053CF">
+<div id="container">
+  <div id="header">
+	<!--img id="banner" src="logo.png" alt="Banner Image" -->
+	<div id="title">2017 Immaculate Conception Parish Festival Bingo</div>
+          <div id="bingocalled">BINGO CALLED!! - Hold all cards until confirmed</div>
+  </div>
+
+  <div id="bingotable">
+
+    <table id="callerboard">
+      <tr> <th class="Bingo">B</th><td class="blackselectable"> 1 </td><td class="blackselectable"> 2 </td><td class="blackselectable"> 3 </td><td class="blackselectable"> 4 </td><td class="blackselectable"> 5 </td><td class="blackselectable"> 6 </td><td class="blackselectable"> 7 </td><td class="blackselectable"> 8 </td><td class="blackselectable"> 9 </td><td class="blackselectable"> 10 </td><td class="blackselectable"> 11 </td><td class="blackselectable"> 12 </td><td class="blackselectable"> 13 </td><td class="blackselectable"> 14 </td><td class="blackselectable"> 15 </td>
+      <tr> <th class="Bingo">I</th><td class="blackselectable"> 16 </td><td class="blackselectable"> 17 </td><td class="blackselectable"> 18 </td><td class="blackselectable"> 19 </td><td class="blackselectable"> 20 </td><td class="blackselectable"> 21 </td><td class="blackselectable"> 22 </td><td class="blackselectable"> 23 </td><td class="blackselectable"> 24 </td><td class="blackselectable"> 25 </td><td class="blackselectable"> 26 </td><td class="blackselectable"> 27 </td><td class="blackselectable"> 28 </td><td class="blackselectable"> 29 </td><td class="blackselectable"> 30 </td>
+      <tr> <th class="Bingo">N</th><td class="blackselectable"> 31 </td><td class="blackselectable"> 32 </td><td class="blackselectable"> 33 </td><td class="blackselectable"> 34 </td><td class="blackselectable"> 35 </td><td class="blackselectable"> 36 </td><td class="blackselectable"> 37 </td><td class="blackselectable"> 38 </td><td class="blackselectable"> 39 </td><td class="blackselectable"> 40 </td><td class="blackselectable"> 41 </td><td class="blackselectable"> 42 </td><td class="blackselectable"> 43 </td><td class="blackselectable"> 44 </td><td class="blackselectable"> 45 </td>
+      <tr> <th class="Bingo">G</th><td class="blackselectable"> 46 </td><td class="blackselectable"> 47 </td><td class="blackselectable"> 48 </td><td class="blackselectable"> 49 </td><td class="blackselectable"> 50 </td><td class="blackselectable"> 51 </td><td class="blackselectable"> 52 </td><td class="blackselectable"> 53 </td><td class="blackselectable"> 54 </td><td class="blackselectable"> 55 </td><td class="blackselectable"> 56 </td><td class="blackselectable"> 57 </td><td class="blackselectable"> 58 </td><td class="blackselectable"> 59 </td><td class="blackselectable"> 60 </td>
+      <tr> <th class="Bingo">O</th><td class="blackselectable"> 61 </td><td class="blackselectable"> 62 </td><td class="blackselectable"> 63 </td><td class="blackselectable"> 64 </td><td class="blackselectable"> 65 </td><td class="blackselectable"> 66 </td><td class="blackselectable"> 67 </td><td class="blackselectable"> 68 </td><td class="blackselectable"> 69 </td><td class="blackselectable"> 70 </td><td class="blackselectable"> 71 </td><td class="blackselectable"> 72 </td><td class="blackselectable"> 73 </td><td class="blackselectable"> 74 </td><td class="blackselectable"> 75 </td>
+    </table>
+	<div id="timerwindow">
+		<span id="timerlabel" class="timertext"> Time to Next Game: </span><br>
+		<span id="countdown" class="timer"></span>
+	 
+	</div>
+	<div id="WinnerWindow">
+		<img id="Joy-Image" class="joy-img" alt="Yeehaw"/>
+	</div>
+ </div>
+ 
+<div id="BottomContainer">
+ 
+ <div id="BottomLeftBlock">
+  
+  <div id="currgamelabel" class="bottomlabels">
+       <p style="margin-top: 20px;">Current Game</p>
+  </div> 
+ 
+  <div class="infodiv">
+      <div id="gametype" class="bingogame">Bingo</div>
+  </div>       
+
+  <div id="jackpotlabel" class="bottomlabels">
+      <p style="margin-top: 20px;">Jackpot Amount</p>
+  </div>
+  <div class="infodiv">
+	<div id="jackpotamt" class="jackpot"></div>
+  </div>  
+ </div>
+ 
+ <div id="BottomLogo1">
+  <img id="IC-logo" src="ICC.png" alt="Banner Image"/>
+ </div>
+ <div class="lastnumdiv">
+        <div class="lastcalledlabel">
+ 	    <span>Last Ball Called</span>
+        </div>
+
+	<div class="bingoball">
+           <br/><br/><br/>
+	   <div id="lastcalled" class="lastnumber"></div>
+	
+
+	</div>
+	
+ </div>
+
+ <div id="BottomLogo2">
+  <img id="Rams-logo" src="ICRams.png" alt="Banner Image"/>
+ </div>
+
+ <div class="admin">
+   <div id="column" style="background-color:#E6E6E6;height:210px;width:55px;float:left;"></div>
+   
+   <div id="buttoncontainer">   
+     <span style="font-family: Helvetica; font-size: 20px;">Gameboard Controls</span><br/><HR>
+        
+    <div style="float: left;">
+ 
+      <select id="bingogames" style="width:129px;">
+        <option value="Bingo">Bingo</option>
+        <option value="2 for 1">2 for 1</option>
+        <option value="3 for 1">3 for 1</option>
+        <option value="Coverall">Coverall</option>
+      </select>
+
+      <button id="gamebutton">Set Game Type</button>
+      
+    </div>
+
+    <div style="float: left; margin-top: 5px; margin-bottom: 5px;">
+      <input type="text" id="amount" name="amount" style="width:125px;">
+      <button id="jackpotamtbutton">Set Jackpot Amount</button>
+    </div>
+
+    <div style="margin-top: 5px;">
+      <button id="bingowascalled">Bingo Called</button>
+      <button id="confirmbingo">Confirm Bingo</button>
+      <button id="cancelbingo">Cancel</button>
+	  <button id="nextpicture">Next Picture</button>
+    </div>
+
+    <div style="margin-top: 5px;">
+      <button id="reset">Reset Gameboard</button>
+	  <!-- <input type="checkbox" id="randomize" value="Random">Random images<br> -->
+	  <HR>
+  
+	</div>
+	<div id="timercontainer">
+		<div id="settimercontrols">
+			<button type="button" id="settimerbutton">Set Timer For Next Game</button>
+		</div>
+		<div id="timerstartcontrols">
+			<input type="text" id="hour" name="hour" style="width:20px;">
+			<span style="font-family: Helvetica; font-size: 10px;"> : </span>
+			<input type="text" id="minute" name="minute" style="width:20px;">
+			<span style="font-family: Helvetica; font-size: 10px;"> : </span>
+			<input type="text" id="second" name="second" style="width:20px;">
+			<button type="button" id="timerbtn">Start Timer</button>
+			<button type="button" id="cancelsettimerbutton">cancel</button>
+		</div>
+		<div id="timercontrolbuttons">
+			<span style="font-family: Helvetica; font-size: 20px;">Timer </span>
+			<button type="button" id="pausetimerbutton">Pause</button>
+			<button type="button"  style="display:none" id="resumetimerbutton">Resume</button>
+			<button type="button" id="canceltimerbutton">Cancel</button>
+		</div>
+    </div>   
+   </div>
+ </div>
+ </div>
+</div>
+</body>
+</html>
